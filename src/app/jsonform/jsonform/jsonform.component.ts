@@ -1,11 +1,8 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, Input } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { FormGroup } from '@angular/forms';
 import { FormlyFieldConfig, FormlyFormOptions } from '@ngx-formly/core';
 import { FormlyJsonschema } from '@ngx-formly/core/json-schema';
-import { Subject } from 'rxjs';
-
-import { tap, takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'app-jsonform',
@@ -15,8 +12,7 @@ import { tap, takeUntil } from 'rxjs/operators';
 export class JsonformComponent {
 
   @Input() schemaModel: any;
-
-  // private destroy$: Subject<any> = new Subject<any>();
+  @Output() completeEvent: EventEmitter<any> = new EventEmitter();
 
   // Parameters for the formly form
   form: FormGroup = new FormGroup({});
@@ -28,7 +24,7 @@ export class JsonformComponent {
   };
   fields: FormlyFieldConfig[] = [];
 
-  constructor(private formlyJsonschema: FormlyJsonschema, private http: HttpClient, private fb: FormBuilder) {
+  constructor(private formlyJsonschema: FormlyJsonschema) {
   }
 
   ngOnInit() {
@@ -36,39 +32,16 @@ export class JsonformComponent {
   }
 
   submit() {
-    console.log("submit-model", this.model)
-    console.log("submit-fields", this.fields)
+    console.log("complete-model", this.model)
+    console.log("complete-fields", this.fields)
 
     //alert(JSON.stringify(this.model));
+    this.completeEvent.emit(this.model);
   }
-
-  public ngOnDestroy(): void {
-    // this.destroy$.next(true);
-    // this.destroy$.complete();
-  }
-
 
   customFormatFields(fields: FormlyFieldConfig[]) {
-    console.log("formatQuoteFields", fields)
-
+    // Set the top level field to be a stepper
     fields[0].type = 'stepper';
-
-    fields[0].fieldGroup?.forEach(f => {
-      if (f.key === 'risk') {
-        console.log("riskField", f)
-
-        const elements = document.querySelector('formly-array-type');
-        elements?.childNodes.forEach((element: any) => {
-          //change background color to red
-          console.log("element", element)
-
-          //change background color to red
-          element.style.backgroundColor = 'red';
-
-        })
-      }
-    })
-
     return fields;
   }
 
@@ -82,11 +55,10 @@ export class JsonformComponent {
   }
 
   iniitializeForm() {
-    console.log("********* Initialize Form **************", this.schemaModel)
     this.form = new FormGroup({});
     this.options = {};
     this.fields = [this.formlyJsonschema.toFieldConfig(this.schemaModel.schema)];
-    this.model = this.schemaModel.model;
+    this.model = this.schemaModel.model ? this.schemaModel.model : {};
 
     this.fields = this.customFormatFields(this.fields);
 

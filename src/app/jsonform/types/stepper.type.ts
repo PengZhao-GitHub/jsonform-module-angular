@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { FieldType, FormlyFieldConfig } from '@ngx-formly/core';
 
 @Component({
@@ -28,13 +28,16 @@ import { FieldType, FormlyFieldConfig } from '@ngx-formly/core';
                 Next
               </button>
 
-              <button *ngIf="last" mat-raised-button color="primary" [disabled]="!form.valid" type="submit" click="confirm($event)">Confirm</button>
+              <button *ngIf="last" mat-raised-button [disabled]="!form.valid">Complete</button>
             </div>
       </mat-step>
     </mat-horizontal-stepper>
   `,
 })
 export class FormlyFieldStepper extends FieldType {
+
+  @Output() confirmButtonClicked: EventEmitter<any> = new EventEmitter();
+
   isValid(field: FormlyFieldConfig): boolean {
     if (field.key) {
       return field.formControl ? field.formControl.valid : false;
@@ -43,8 +46,12 @@ export class FormlyFieldStepper extends FieldType {
     return field.fieldGroup ? field.fieldGroup.every((f) => this.isValid(f)) : true;
   }
 
-  confirm(e: any) {
-    e.preventDefault();
-    alert('You clicked confirm!');
-  }
+  // confirm(e: any) {
+  //   e.preventDefault();
+  //   //console.log("confirm", e)
+  //   alert('You clicked confirm!');
+  //   this.confirmButtonClicked.emit(e);
+   
+
+  // }
 }

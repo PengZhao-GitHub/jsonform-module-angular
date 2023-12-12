@@ -1,0 +1,215 @@
+{
+    "$id": "#/definitions/Policy",
+    "type": "object",
+    "title": "Policy",
+    "additionalProperties": false,
+    "required": [],
+    "properties": {
+        "summary": {
+            "$ref": "#/definitions/Summary",
+            "description": "Summary"
+        },
+        "risk": {
+            "type": "array",
+            "items": {
+                "$ref": "#/definitions/Risk"
+            },
+            "description": "Risk"
+        },
+        "policyTotalPremium": {
+            "type": "number",
+            "description": "Policy Total Premium"
+        }
+    },
+    "definitions": {
+        "Summary": {
+            "$id": "#/definitions/Summary",
+            "type": "object",
+            "title": "Summary",
+            "additionalProperties": false,
+            "required": [],
+            "properties": {
+                "effectiveDate": {
+                    "type": "string",
+                    "description": "Effective Date"
+                },
+                "term": {
+                    "type": "string",
+                    "description": "Term"
+                }
+            }
+        },
+        "Risk": {
+            "$id": "#/definitions/Risk",
+            "type": "object",
+            "title": "Risk",
+            "additionalProperties": false,
+            "required": [],
+            "properties": {
+                "coverage": {
+                    "$ref": "#/definitions/Coverage",
+                    "description": "Coverage"
+                },
+                "vehicle": {
+                    "$ref": "#/definitions/Vehicle",
+                    "description": "Vehicle"
+                },
+                "driver": {
+                    "$ref": "#/definitions/Driver",
+                    "description": "Driver"
+                },
+                "premium": {
+                    "$ref": "#/definitions/Premium",
+                    "description": "Premium"
+                }
+            }
+        },
+        "Coverage": {
+            "$id": "#/definitions/Coverage",
+            "type": "object",
+            "title": "Coverage",
+            "additionalProperties": false,
+            "required": [
+                "BI"
+            ],
+            "properties": {
+                "BI": {
+                    "type": "string",
+                    "enum": [
+                        "25000/50000",
+                        "50000/100000",
+                        "100000/200000",
+                        "100000/300000",
+                        "300000/300000",
+                        "250000/500000"
+                    ],
+                    "description": "Bodily Injury"
+                },
+                "PD": {
+                    "type": "string",
+                    "enum": [
+                        "-1",
+                        "10000",
+                        "15000",
+                        "20000",
+                        "25000",
+                        "50000",
+                        "100000",
+                        "150000",
+                        "200000",
+                        "250000"
+                    ],
+                    "description": "Property Damage"
+                },
+                "MedPay": {
+                    "type": "string",
+                    "enum": [
+                        "-1",
+                        "1000",
+                        "2000",
+                        "5000",
+                        "10000"
+                    ],
+                    "description": "Medical Payments"
+                },
+                "UM": {
+                    "type": "string",
+                    "enum": [
+                        "NoCoverage",
+                        "25000/50000",
+                        "50000/100000",
+                        "100000/200000",
+                        "100000/300000",
+                        "300000/300000",
+                        "250000/500000"
+                    ],
+                    "description": "Uninsured Motorists"
+                },
+                "OTC": {
+                    "type": "number",
+                    "enum": [
+                        "-1",
+                        "0",
+                        "50",
+                        "100",
+                        "200",
+                        "250",
+                        "500",
+                        "1000"
+                    ],
+                    "description": "Other Than Collision"
+                }
+            }
+        },
+        "Vehicle": {
+            "$id": "#/definitions/Vehicle",
+            "type": "object",
+            "title": "Vehicle",
+            "additionalProperties": false,
+            "required": [],
+            "properties": {
+                "name": {
+                    "type": "string",
+                    "description": "Name"
+                },
+                "model": {
+                    "type": "string",
+                    "description": "Model"
+                },
+                "usage": {
+                    "type": "string",
+                    "description": "Usage"
+                },
+                "performanceType": {
+                    "type": "string",
+                    "enum": [
+                        "standard",
+                        "Intermediate",
+                        "high",
+                        "sports",
+                        "sportsPremium"
+                    ],
+                    "description": "Performance Type"
+                },
+                "territory": {
+                    "type": "string",
+                    "description": "Territory"
+                }
+            }
+        },
+        "Driver": {
+            "$id": "#/definitions/Driver",
+            "type": "object",
+            "title": "Driver",
+            "additionalProperties": false,
+            "required": [],
+            "properties": {
+                "gender": {
+                    "type": "string",
+                    "description": "Gender"
+                }
+            }
+        },
+        "Premium": {
+            "$id": "#/definitions/Premium",
+            "type": "object",
+            "title": "Premium",
+            "additionalProperties": false,
+            "required": [],
+            "properties": {
+                "bodilyInjuryBasePremium": {
+                    "type": "number",
+                    "description": "Bodily Injury Base Premium"
+                },
+                "riskTotalPremium": {
+                    "type": "number",
+                    "description": "Risk Total Premium"
+                },
+                "bodilyIinjuryPremium": {
+                    "type": "number",
+                    "description": "Bodily Injury Premium"
+                }
+            }
+        }
+    }
+}

@@ -17,22 +17,24 @@ import { Subject } from 'rxjs';
 export class AppComponent implements OnDestroy {
   private destroy$: Subject<any> = new Subject<any>();
 
-  e: any;
+  // e: any;
   schemaModel: any;
 
-  form: FormGroup = new FormGroup({});
+  formResult: any;
 
-  model: any;
+  // form: FormGroup = new FormGroup({});
 
-  options: FormlyFormOptions = {
-    formState: {
-      disabled: true,
-    },
-  };
+  // model: any;
 
-  fields: FormlyFieldConfig[] = [];
+  // options: FormlyFormOptions = {
+  //   formState: {
+  //     disabled: true,
+  //   },
+  // };
 
-  type: string = '';
+  // fields: FormlyFieldConfig[] = [];
+
+  // type: string = '';
 
   examples = [
     'simple',
@@ -66,18 +68,18 @@ export class AppComponent implements OnDestroy {
       .get<any>(`assets/json-schema/${type}.json`)
       .pipe(
         tap(({ schema, model }) => {
-          this.type = type;
-          this.form = new FormGroup({});
-          this.options = {};
-          this.fields = [this.formlyJsonschema.toFieldConfig(schema)];
-          this.model = model;
-          this.fields = this.formatQuoteFields(this.fields);
+          // this.type = type;
+          // this.form = new FormGroup({});
+          // this.options = {};
+          // this.fields = [this.formlyJsonschema.toFieldConfig(schema)];
+          // this.model = model;
+          // this.fields = this.formatQuoteFields(this.fields);
 
 
-          console.log("schema:", schema)
-          console.log("model:", model)
-          console.log("fields:", this.fields)
-          console.log("options:", this.options)
+          // console.log("schema:", schema)
+          // console.log("model:", model)
+          // console.log("fields:", this.fields)
+          // console.log("options:", this.options)
 
           //assign schema to a jsonform
           this.schemaModel = {
@@ -96,53 +98,13 @@ export class AppComponent implements OnDestroy {
       .subscribe();
   }
 
-  submit() {
-    console.log("submit-model", this.model)
-    console.log("submit-fields", this.fields)
 
-    //alert(JSON.stringify(this.model));
-  }
 
   public ngOnDestroy(): void {
     this.destroy$.next(true);
     this.destroy$.complete();
   }
 
-
-  // toggleDisabled() {
-  //   this.options.formState.disabled = !this.options.formState.disabled;
-  // }
-
-  formatQuoteFields(fields: FormlyFieldConfig[]) {
-    console.log("formatQuoteFields", fields)
-
-    fields[0].type = 'stepper';
-    //fields[0].type = 'tabs';
-
-    //find key fields with value as "risk"
-    //let riskFields = fields[0].fieldGroup ? fields[0].fieldGroup.filter(f => f.key === 'risk') : [];
-
-    // find the pointer to the risk field
-    // let riskField = fields[0].fieldGroup ? fields[0].fieldGroup.find(f => f.key === 'risk') : null;
-    // console.log("riskField", riskField)
-    fields[0].fieldGroup?.forEach(f => {
-      if (f.key === 'risk') {
-        console.log("riskField", f)
-
-        const elements = document.querySelector('formly-array-type');
-        elements?.childNodes.forEach((element: any) => {
-          //change background color to red
-          console.log("element", element)
-
-          //change background color to red
-          element.style.backgroundColor = 'red';
-
-        })
-      }
-    })
-
-    return fields;
-  }
 
 
   // onClick(e: any) {
@@ -219,146 +181,151 @@ export class AppComponent implements OnDestroy {
 
   }
 
-  modelChangeBackup(e: any) {
-    console.log("click -> model chanage", e)
+  // modelChangeBackup(e: any) {
+  //   console.log("click -> model chanage", e)
 
-    this.fields[0].fieldGroup?.forEach(f => {
-      if (f.key === 'risk') {
-        console.log("riskField", f)
+  //   this.fields[0].fieldGroup?.forEach(f => {
+  //     if (f.key === 'risk') {
+  //       console.log("riskField", f)
 
-        const formlyArray = document.querySelector('formly-array-type');
+  //       const formlyArray = document.querySelector('formly-array-type');
 
-        if (!formlyArray) return
+  //       if (!formlyArray) return
 
-        console.log("*****************formlyArray**********", formlyArray)
-
-
-        formlyArray.childNodes.forEach((element: any) => {
-          //change background color to red
-          console.log("element", element)
-
-          //change background color to red
-          element.style.backgroundColor = 'gray';
-          element.style.padding = '10px'; // Adjust margins as needed
-          element.style.margin = '10px'; // Adjust margins as needed
-
-          const childElements = element.querySelectorAll('.row');
-          childElements.forEach((childElement: any) => {
-
-            childElement.style.backgroundColor = 'yellow';
-            childElement.style.padding = '10px'; // Adjust margins as needed
-            childElement.style.margin = '20px'; // Adjust margins as needed
-
-            //get legend element
-            // const legend = childElement.querySelector('legend');
-            // console.log("legend", legend)
+  //       console.log("*****************formlyArray**********", formlyArray)
 
 
+  //       formlyArray.childNodes.forEach((element: any) => {
+  //         //change background color to red
+  //         console.log("element", element)
+
+  //         //change background color to red
+  //         element.style.backgroundColor = 'gray';
+  //         element.style.padding = '10px'; // Adjust margins as needed
+  //         element.style.margin = '10px'; // Adjust margins as needed
+
+  //         const childElements = element.querySelectorAll('.row');
+  //         childElements.forEach((childElement: any) => {
+
+  //           childElement.style.backgroundColor = 'yellow';
+  //           childElement.style.padding = '10px'; // Adjust margins as needed
+  //           childElement.style.margin = '20px'; // Adjust margins as needed
+
+  //           //get legend element
+  //           // const legend = childElement.querySelector('legend');
+  //           // console.log("legend", legend)
 
 
-            // check if button is already added
-            const button = childElement.querySelector('.expand-button');
-            console.log("button", button)
-            if (button) return;
 
-            //add a button
-            const newButton = document.createElement('button');
-            newButton.innerHTML = "Cllapse";
-            //newButton.className = "expand-button";
-            // add class expand-button to the new button
-            newButton.classList.add("expand-button");
 
-            // newButton.style.backgroundColor = 'green';
+  //           // check if button is already added
+  //           const button = childElement.querySelector('.expand-button');
+  //           console.log("button", button)
+  //           if (button) return;
 
-            //add event listener
-            newButton.addEventListener('click', (e: any) => {
-              console.log("click -> model chanage", e)
+  //           //add a button
+  //           const newButton = document.createElement('button');
+  //           newButton.innerHTML = "Cllapse";
+  //           //newButton.className = "expand-button";
+  //           // add class expand-button to the new button
+  //           newButton.classList.add("expand-button");
 
-              //get parent element
-              // const parentElement = e.target.parentElement;
-              // console.log("parentElement", parentElement)
-              // parentElement.parentElement.style.display = parentElement.parentElement.style.display =='none' ? 'block' : 'none';
-              const container = e.target.parentElement.parentElement.querySelector('formly-field');
-              container.style.display = container.style.display == 'none' ? 'block' : 'none';
-              e.target.innerHTML = e.target.innerHTML == 'Cllapse' ? 'Expand' : 'Cllapse';
+  //           // newButton.style.backgroundColor = 'green';
 
-            })
+  //           //add event listener
+  //           newButton.addEventListener('click', (e: any) => {
+  //             console.log("click -> model chanage", e)
 
-            //get the delete button
-            const deleteButton = childElement.querySelector('.btn-danger');
-            console.log("deleteButton", deleteButton)
+  //             //get parent element
+  //             // const parentElement = e.target.parentElement;
+  //             // console.log("parentElement", parentElement)
+  //             // parentElement.parentElement.style.display = parentElement.parentElement.style.display =='none' ? 'block' : 'none';
+  //             const container = e.target.parentElement.parentElement.querySelector('formly-field');
+  //             container.style.display = container.style.display == 'none' ? 'block' : 'none';
+  //             e.target.innerHTML = e.target.innerHTML == 'Cllapse' ? 'Expand' : 'Cllapse';
+
+  //           })
+
+  //           //get the delete button
+  //           const deleteButton = childElement.querySelector('.btn-danger');
+  //           console.log("deleteButton", deleteButton)
             
-            // create a new div element
-            const newDiv = document.createElement("div");
-            //set div disaply to flex
-            //newDiv.style. = "display: flex; flex-direction: row; justify-content: space-between; align-items: center;";
-            newDiv.style.display = "flex";
-            newDiv.style.flexDirection = "row";
-            newDiv.style.justifyContent = "space-between";
-            newDiv.style.alignItems = "center";
+  //           // create a new div element
+  //           const newDiv = document.createElement("div");
+  //           //set div disaply to flex
+  //           //newDiv.style. = "display: flex; flex-direction: row; justify-content: space-between; align-items: center;";
+  //           newDiv.style.display = "flex";
+  //           newDiv.style.flexDirection = "row";
+  //           newDiv.style.justifyContent = "space-between";
+  //           newDiv.style.alignItems = "center";
 
-            //append the two buttons to the new div
-            newDiv.appendChild(deleteButton);
-            newDiv.appendChild(newButton);
+  //           //append the two buttons to the new div
+  //           newDiv.appendChild(deleteButton);
+  //           newDiv.appendChild(newButton);
             
 
-            //append the new div to the child element
-            childElement.appendChild(newDiv);
+  //           //append the new div to the child element
+  //           childElement.appendChild(newDiv);
 
-            // childElement.appendChild(deleteButton);
-            // childElement.appendChild(newButton);
-
-
-            //legend.appendChild(newButton);
-
-          })
-
-          //formate element to tabs
-          //this.formatToTabs(element);
-
-        })
-      }
-    })
-
-  }
-
-  formatToTabs(element: any) {
-    console.log("formatToTabs", element)
-
-    // create a <mat-tab-group> element
-    const tabGroup = document.createElement('mat-tab-group');
-    const childElements = element.querySelectorAll('.row');
-    //convert each child element to a tab
-    childElements.forEach((childElement: any) => {
-      console.log("childElement", childElement)
-
-      //clone a child element
-      const newChildElement = childElement.cloneNode(true);
-
-      // create a <mat-tab> element
-      const tab = document.createElement('mat-tab');
-      tab.setAttribute('label', "Peng");
-
-      // move the child element into the <mat-tab> element
-      tab.appendChild(newChildElement);
-
-      // move the <mat-tab> element into the <mat-tab-group> element
-      tabGroup.appendChild(tab);
-
-      //remove the child element
+  //           // childElement.appendChild(deleteButton);
+  //           // childElement.appendChild(newButton);
 
 
-    });
+  //           //legend.appendChild(newButton);
 
-    //element.parentElement.parentElement.appendChild(tabGroup);
-    console.log("tabGroup", tabGroup)
-    console.log("element", element)
+  //         })
 
-    // replace element with the <mat-tab-group> element
+  //         //formate element to tabs
+  //         //this.formatToTabs(element);
+
+  //       })
+  //     }
+  //   })
+
+  // }
+
+  // formatToTabs(element: any) {
+  //   console.log("formatToTabs", element)
+
+  //   // create a <mat-tab-group> element
+  //   const tabGroup = document.createElement('mat-tab-group');
+  //   const childElements = element.querySelectorAll('.row');
+  //   //convert each child element to a tab
+  //   childElements.forEach((childElement: any) => {
+  //     console.log("childElement", childElement)
+
+  //     //clone a child element
+  //     const newChildElement = childElement.cloneNode(true);
+
+  //     // create a <mat-tab> element
+  //     const tab = document.createElement('mat-tab');
+  //     tab.setAttribute('label', "Peng");
+
+  //     // move the child element into the <mat-tab> element
+  //     tab.appendChild(newChildElement);
+
+  //     // move the <mat-tab> element into the <mat-tab-group> element
+  //     tabGroup.appendChild(tab);
+
+  //     //remove the child element
+
+
+  //   });
+
+  //   //element.parentElement.parentElement.appendChild(tabGroup);
+  //   console.log("tabGroup", tabGroup)
+  //   console.log("element", element)
+
+  //   // replace element with the <mat-tab-group> element
 
 
 
 
+  // }
+
+  onComplete(event: any){
+    console.log("onComplete", event)
+    this.formResult = JSON.stringify(event);
   }
 
 }

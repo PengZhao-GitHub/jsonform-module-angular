@@ -1,35 +1,15 @@
 <div style="margin-bottom: 20px">
-  <button *ngFor="let example of examples" (click)="loadExample(example)" class="btn"
-    [class.btn-primary]="type === example">
+  <button *ngFor="let example of examples" (click)="loadExample(example)" mat-raised-button>
     {{ example }}
   </button>
 </div>
 
-<!-- <div class="mb-3">
-  <label>
-    <code>formState.disabled</code>
-  </label>
-  <div>
-    <button class="btn btn-sm btn-primary" (click)="toggleDisabled()">Toggle</button>
-  </div>
-</div> -->
-
-<!-- <mat-card>
-  <mat-card-title>Formly Example</mat-card-title>
-  <mat-card-content>
-    <form [formGroup]="form" (ngSubmit)="submit()" *ngIf="fields" class="top-level-form">
-      <formly-form [model]="model" [fields]="fields" [options]="options" [form]="form"  (modelChange)="modelChange($event)">
-      </formly-form>
-      <div class="form-buttons">
-        <button mat-raised-button color="primary" (click)="options?.resetModel()">Reset</button>
-      </div>
-    </form>
-  </mat-card-content>
-</mat-card> -->
-
-<br>
-
 <mat-card *ngIf="schemaModel != undefined">
-  <app-jsonform [schemaModel]="schemaModel"> </app-jsonform>
+  <app-jsonform [schemaModel]="schemaModel" (completeEvent)="onComplete($event)"> </app-jsonform>
 </mat-card>
 
+<br>
+<br>
+<mat-card *ngIf="schemaModel != undefined">
+  <pre>{{ formResult}}</pre>
+</mat-card>
