@@ -1,0 +1,66 @@
+import { Component } from '@angular/core';
+import { FieldArrayType } from '@ngx-formly/core';
+
+@Component({
+  selector: 'formly-array-type',
+  styleUrls : [ './jsonform-custom.scss' ],
+  template: `
+    <div class="mb-3">
+      <legend *ngIf="props.label">{{ props.label }}</legend>
+      <p *ngIf="props.description">{{ props.description }}</p>
+      <div class="d-flex flex-row-reverse">
+        <button mat-raised-button class="btn btn-primary" type="button" (click)="add()">Add new {{ props.label }}</button>
+      </div>
+
+      <div class="alert alert-danger" role="alert" *ngIf="showError && formControl.errors">
+        <formly-validation-message [field]="field"></formly-validation-message>
+      </div>
+
+      <div *ngFor="let field of field.fieldGroup; let i = index" class="row align-items-start">
+          <div *ngIf="field.props?.['removable'] !== false" class="row-header">
+            <div>Item {{i}} </div>
+            <div>
+              <button mat-button  (click)="remove(i)">Delete</button>
+              <button mat-button (click)="toggleItem($event)">Collapse</button>
+            </div>
+          </div>  
+
+        <formly-field [field]="field"></formly-field>
+
+      </div>
+    </div>
+  `,
+})
+export class ArrayTypeComponent extends FieldArrayType {
+
+  toggleItem(e: any) {
+    e.preventDefault();
+    e.stopPropagation();
+    console.log('toggleItem', e);
+    
+    const button = e.target as HTMLButtonElement;
+    console.log('button', button);
+    button.innerHTML = button.innerHTML.includes('Collapse') ? 'Open' : 'Collapse';
+
+    //if button.innerHTML === 'Collapse' then collapse the formly-field
+
+   //get the formly-field element next to the button
+    const buttonParentNode = button.parentNode
+    const parentNodeOfButtonParentNode = buttonParentNode?.parentNode;
+    const parentNodeLevel2 = parentNodeOfButtonParentNode?.parentNode;
+    const parentNodeLevel1 = parentNodeLevel2?.parentNode;
+
+    console.log('buttonParentNode', buttonParentNode);
+    console.log('parentNodeOfButtonParentNode', parentNodeOfButtonParentNode);
+    console.log('parentNodeLevel2', parentNodeLevel2);
+    console.log('parentNodeLevel1', parentNodeLevel1);
+
+    const container = parentNodeLevel1?.querySelector('formly-field') as HTMLElement;
+    if(container) {
+      //container.style.display = container.style.display == 'none' ? 'block' : 'none';
+      container.classList.toggle('collapsed');
+    }
+  }
+
+}
+

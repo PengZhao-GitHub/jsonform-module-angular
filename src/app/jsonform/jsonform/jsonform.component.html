@@ -1,0 +1,8 @@
+<form [formGroup]="form" (ngSubmit)="submit()" *ngIf="fields">
+  <formly-form [model]="model" [fields]="fields" [options]="options" [form]="form" (modelChange)="modelChange($event)">
+  </formly-form>
+  <div class="reset-submit-buttons">
+    <button mat-raised-button color="primary" (click)="options?.resetModel()">Reset</button>
+    <button mat-raised-button color="primary" [disabled]="!form.valid">Submit</button>
+  </div>
+</form>
